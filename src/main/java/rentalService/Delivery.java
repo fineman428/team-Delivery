@@ -1,18 +1,22 @@
 package rentalService;
 
 import javax.persistence.*;
+
+import lombok.Data;
 import org.springframework.beans.BeanUtils;
 import java.util.List;
 
+@Data
 @Entity
 @Table(name="Delivery_table")
 public class Delivery {
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    private Long productId;
     private Long rentalId;
-    private Integer qty;
+    private int qty;
     private String status;
 
     @PostPersist
@@ -21,6 +25,24 @@ public class Delivery {
         BeanUtils.copyProperties(this, delivered);
         delivered.publishAfterCommit();
 
+        if (status.equals("CANCELED_UnregisteredProduct") ||
+                status.equals("CANCELED_OutOfStock") ){
+            // 미등록 상품 = 수량 부족 이벤트 임시로 같이 사용
+            OutOfStockRentalCanceled outOfStockRentalCanceled = new OutOfStockRentalCanceled();
+            BeanUtils.copyProperties(this, outOfStockRentalCanceled);
+            //outOfStockRentalCanceled.setRentalId(rentaled.getId());
+            //outOfStockRentalCanceled.setStatus("CANCELED");
+            outOfStockRentalCanceled.publishAfterCommit();
+
+        }
+    }
+
+    @PostUpdate
+    public void onPUUpdate(){
+
+        if (status.equals("CANCELED")) {
+
+        }
 
     }
 
@@ -33,7 +55,7 @@ public class Delivery {
 
     }
 
-
+    /*
     public Long getId() {
         return id;
     }
@@ -63,7 +85,11 @@ public class Delivery {
         this.status = status;
     }
 
+    public Long getProductId() {
+        return productId;
+    }
 
-
-
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }*/
 }

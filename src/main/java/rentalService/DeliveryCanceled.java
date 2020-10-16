@@ -1,9 +1,12 @@
 package rentalService;
 
+import lombok.Data;
+
+@Data
 public class DeliveryCanceled extends AbstractEvent {
 
     private Long id;
-    private Integer qty;
+    private int qty;
     private String status;
     private Long rentalId;
 
@@ -11,6 +14,7 @@ public class DeliveryCanceled extends AbstractEvent {
         super();
     }
 
+    /*
     public Long getId() {
         return id;
     }
@@ -38,5 +42,5 @@ public class DeliveryCanceled extends AbstractEvent {
 
     public void setRentalId(Long rentalId) {
         this.rentalId = rentalId;
-    }
+    }*/
 }
