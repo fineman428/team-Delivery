@@ -29,7 +29,7 @@ public class PolicyHandler{
 
             // 배송 등록
             Delivery delivery = new Delivery();
-            //delivery.setProductId(rentaled.getProductId());
+            delivery.setProductId(rentaled.getProductId());
             delivery.setRentalId(rentaled.getId());
             delivery.setStatus("DELIVERED");
             delivery.setQty(rentaled.getQty());
