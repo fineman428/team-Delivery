@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: Delivery
+  name: delivery
   labels:
-    app: Delivery
+    app: delivery
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: Delivery
+      app: delivery
   template:
     metadata:
       labels:
-        app: Delivery
+        app: delivery
     spec:
       containers:
-        - name: Delivery
-          image: 496278789073.dkr.ecr.ap-northeast-1.amazonaws.com/skccuser02-delivery
+        - name: delivery
+          image: 496278789073.dkr.ecr.ap-northeast-1.amazonaws.com/skccuser02-delivery:v1
           ports:
             - containerPort: 8080
           readinessProbe:
